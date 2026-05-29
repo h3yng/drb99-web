@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { AurForm } from "@/components/forms/aur-form";
 import { GoReleaseForm } from "@/components/forms/go-release-form";
 import { NpmWrapperForm } from "@/components/forms/npm-wrapper-form";
+import { NixForm } from "@/components/forms/nix-form";
 import { generatePackage } from "@/lib/api";
 import { useAppContext, type DistributorType } from "@/lib/app-context";
 import { getDistributorLabel } from "@/components/forms/distributor-selector";
@@ -45,8 +46,25 @@ function getLanguage(filename: string) {
     case "yml":
     case "yaml":
       return "yaml";
+    case "nix":
+      return "nix";
     default:
       return "plaintext";
+  }
+}
+
+function getDistributorIcon(type: DistributorType): string {
+  switch (type) {
+    case "npm_wrapper":
+      return "/icons/npm-wrapper.svg";
+    case "goreleaser":
+      return "/icons/go-releaser.svg";
+    case "aur":
+      return "/icons/aur.svg";
+    case "nix":
+      return "/icons/nix.svg";
+    default:
+      return "";
   }
 }
 
@@ -60,7 +78,7 @@ function createDefaultViewState(): DistributorViewState {
 }
 
 function isDistributorType(value: string | null): value is DistributorType {
-  return value === "npm_wrapper" || value === "goreleaser" || value === "github_actions" || value === "aur";
+  return value === "npm_wrapper" || value === "goreleaser" || value === "github_actions" || value === "aur" || value === "nix";
 }
 
 function getCurrentFileContent(viewState: DistributorViewState, filename: string) {
@@ -86,6 +104,8 @@ function ResultPageContent() {
     setNpmWrapperData,
     goReleaserData,
     setGoReleaserData,
+    nixData,
+    setNixData,
     prefillIssue,
   } = useAppContext();
 
@@ -170,6 +190,7 @@ function ResultPageContent() {
           activeDistributor === "github_actions" ||
           activeDistributor === "goreleaser",
         aur: activeDistributor === "aur",
+        nix_flake: activeDistributor === "nix",
       };
 
       const payload: Record<string, unknown> = {
@@ -221,6 +242,12 @@ function ResultPageContent() {
           version: aurData.version,
           license: aurData.license || "MIT",
           description: aurData.description,
+        });
+      }
+
+      if (activeDistributor === "nix") {
+        Object.assign(payload, {
+          binary_name: nixData.binaryName,
         });
       }
 
@@ -315,6 +342,10 @@ function ResultPageContent() {
       return <AurForm data={aurData} onChange={setAurData} />;
     }
 
+    if (activeDistributor === "nix") {
+      return <NixForm data={nixData} onChange={setNixData} />;
+    }
+
     return (
       <div className="p-4 text-sm" style={{ border: "1px solid var(--border)", background: "var(--surface)", color: "var(--muted-foreground)" }}>
         GitHub Actions generator has no extra form fields. Use Generate to create workflow files.
@@ -366,7 +397,16 @@ function ResultPageContent() {
                   color: isActive ? "var(--foreground)" : "var(--muted-foreground)",
                 }}
               >
-                <span>{getDistributorLabel(distributor)}</span>
+                <div className="flex items-center gap-3">
+                  {getDistributorIcon(distributor) && (
+                    <img
+                      src={getDistributorIcon(distributor)}
+                      alt={getDistributorLabel(distributor)}
+                      className="h-5 w-5 object-contain opacity-80"
+                    />
+                  )}
+                  <span>{getDistributorLabel(distributor)}</span>
+                </div>
                 <span className="h-1.5 w-1.5" style={{ background: generated ? "var(--dot-generated)" : "var(--dot-idle)" }} />
               </button>
             );
