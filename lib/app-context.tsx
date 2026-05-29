@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import type { NpmWrapperFormData } from "@/components/forms/npm-wrapper-form";
 import type { GoReleaseFormData } from "@/components/forms/go-release-form";
 import type { AurFormData } from "@/components/forms/aur-form";
+import type { NixFormData } from "@/components/forms/nix-form";
 import {
   INITIAL_NPM_WRAPPER_DATA,
 } from "@/components/forms/npm-wrapper-form";
@@ -13,8 +14,11 @@ import {
 import {
   INITIAL_AUR_FORM_DATA,
 } from "@/components/forms/aur-form";
+import {
+  INITIAL_NIX_FORM_DATA,
+} from "@/components/forms/nix-form";
 
-export type DistributorType = "npm_wrapper" | "goreleaser" | "github_actions" | "aur";
+export type DistributorType = "npm_wrapper" | "goreleaser" | "github_actions" | "aur" | "nix";
 
 export interface PrefillResponse {
   repo_url?: string;
@@ -46,6 +50,9 @@ export interface AppContextType {
   aurData: AurFormData;
   setAurData: (data: AurFormData) => void;
 
+  nixData: NixFormData;
+  setNixData: (data: NixFormData) => void;
+
   prefillRepoUrl: string | null;
   setPrefillRepoUrl: (value: string | null) => void;
 
@@ -64,6 +71,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [npmWrapperData, setNpmWrapperData] = useState<NpmWrapperFormData>(INITIAL_NPM_WRAPPER_DATA);
   const [goReleaserData, setGoReleaserData] = useState<GoReleaseFormData>(INITIAL_GO_RELEASE_DATA);
   const [aurData, setAurData] = useState<AurFormData>(INITIAL_AUR_FORM_DATA);
+  const [nixData, setNixData] = useState<NixFormData>(INITIAL_NIX_FORM_DATA);
   const [prefillRepoUrl, setPrefillRepoUrl] = useState<string | null>(null);
   const [prefillIssue, setPrefillIssue] = useState<string | null>(null);
 
@@ -93,6 +101,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setNpmWrapperData(INITIAL_NPM_WRAPPER_DATA);
     setGoReleaserData(INITIAL_GO_RELEASE_DATA);
     setAurData(INITIAL_AUR_FORM_DATA);
+    setNixData(INITIAL_NIX_FORM_DATA);
     setPrefillRepoUrl(null);
     setPrefillIssue(null);
   };
@@ -112,6 +121,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setGoReleaserData,
         aurData,
         setAurData,
+        nixData,
+        setNixData,
         prefillRepoUrl,
         setPrefillRepoUrl,
         prefillIssue,
