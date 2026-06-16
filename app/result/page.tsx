@@ -11,6 +11,7 @@ import { AurForm } from "@/components/forms/aur-form";
 import { GoReleaseForm } from "@/components/forms/go-release-form";
 import { NpmWrapperForm } from "@/components/forms/npm-wrapper-form";
 import { NixForm } from "@/components/forms/nix-form";
+import { DockerForm } from "@/components/forms/docker-form";
 import { generatePackage } from "@/lib/api";
 import { useAppContext, type DistributorType } from "@/lib/app-context";
 import { getDistributorLabel } from "@/components/forms/distributor-selector";
@@ -63,6 +64,8 @@ function getDistributorIcon(type: DistributorType): string {
       return "/icons/aur.svg";
     case "nix":
       return "/icons/nix.svg";
+    case "docker":
+      return "/icons/docker.svg";
     default:
       return "";
   }
@@ -78,7 +81,7 @@ function createDefaultViewState(): DistributorViewState {
 }
 
 function isDistributorType(value: string | null): value is DistributorType {
-  return value === "npm_wrapper" || value === "goreleaser" || value === "github_actions" || value === "aur" || value === "nix";
+  return value === "npm_wrapper" || value === "goreleaser" || value === "github_actions" || value === "aur" || value === "nix" || value === "docker";
 }
 
 function getCurrentFileContent(viewState: DistributorViewState, filename: string) {
@@ -106,6 +109,8 @@ function ResultPageContent() {
     setGoReleaserData,
     nixData,
     setNixData,
+    dockerData,
+    setDockerData,
     prefillIssue,
   } = useAppContext();
 
@@ -191,6 +196,7 @@ function ResultPageContent() {
           activeDistributor === "goreleaser",
         aur: activeDistributor === "aur",
         nix_flake: activeDistributor === "nix",
+        docker_container: activeDistributor === "docker",
       };
 
       const payload: Record<string, unknown> = {
@@ -248,6 +254,14 @@ function ResultPageContent() {
       if (activeDistributor === "nix") {
         Object.assign(payload, {
           binary_name: nixData.binaryName,
+        });
+      }
+
+      if (activeDistributor === "docker") {
+        Object.assign(payload, {
+          binary_name: dockerData.binaryName,
+          runtime_image: dockerData.runtimeImage,
+          platforms: mapPlatformsList(dockerData.platforms),
         });
       }
 
@@ -344,6 +358,10 @@ function ResultPageContent() {
 
     if (activeDistributor === "nix") {
       return <NixForm data={nixData} onChange={setNixData} />;
+    }
+
+    if (activeDistributor === "docker") {
+      return <DockerForm data={dockerData} onChange={setDockerData} />;
     }
 
     return (

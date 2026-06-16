@@ -73,6 +73,7 @@ const FLOATING_ICONS: FloatingIcon[] = [
   { src: "/icons/go-releaser.svg", alt: "GoReleaser", size: 95, initialLeft: "70%", initialTop: "20%", duration: "28s", delay: "-3s", rotateDirection: -1 },
   { src: "/icons/aur.svg", alt: "AUR", size: 75, initialLeft: "24%", initialTop: "56%", duration: "32s", delay: "-6s", rotateDirection: 1 },
   { src: "/icons/nix.svg", alt: "Nix Flake", size: 90, initialLeft: "68%", initialTop: "52%", duration: "26s", delay: "-9s", rotateDirection: -1 },
+  { src: "/icons/docker.svg", alt: "Docker", size: 80, initialLeft: "46%", initialTop: "70%", duration: "30s", delay: "-12s", rotateDirection: 1 },
 ];
 
 export function LandingPage() {

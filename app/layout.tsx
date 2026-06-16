@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     template: "%s | drb99",
   },
   description: "Turn your Go binaries into installable npm packages with the release wiring already handled.",
+  icons: {
+    icon: "/logo/drb99-logo.png",
+  },
 };
 
 export default function RootLayout({
