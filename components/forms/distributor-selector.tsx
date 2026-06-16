@@ -35,6 +35,12 @@ const DISTRIBUTORS: DistributorOption[] = [
     description: "Generate Nix Flake configuration",
     iconPath: "/icons/nix.svg",
   },
+  {
+    id: "docker",
+    label: "Docker",
+    description: "Generate Docker container configuration",
+    iconPath: "/icons/docker.svg",
+  },
 ];
 
 interface DistributorSelectorProps {

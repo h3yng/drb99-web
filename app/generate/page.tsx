@@ -12,6 +12,7 @@ import { INITIAL_AUR_FORM_DATA, type AurFormData } from "@/components/forms/aur-
 import { INITIAL_GO_RELEASE_DATA, type GoReleaseFormData } from "@/components/forms/go-release-form";
 import { INITIAL_NPM_WRAPPER_DATA, type NpmWrapperFormData } from "@/components/forms/npm-wrapper-form";
 import { INITIAL_NIX_FORM_DATA, type NixFormData } from "@/components/forms/nix-form";
+import { INITIAL_DOCKER_FORM_DATA, type DockerFormData } from "@/components/forms/docker-form";
 import { prefillFormData } from "@/lib/api";
 import { useAppContext, type DistributorType, type PrefillResponse } from "@/lib/app-context";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -121,6 +122,20 @@ function buildNixData(repoUrl: string, prefill: PrefillResponse): NixFormData {
     };
 }
 
+function buildDockerData(repoUrl: string, prefill: PrefillResponse): DockerFormData {
+    const binaryName = prefill.binary_name?.trim() ?? "";
+    const platforms = Array.isArray(prefill.platforms)
+        ? prefill.platforms.map((platform) => toUiPlatform(platform))
+        : [];
+
+    return {
+        ...INITIAL_DOCKER_FORM_DATA,
+        repoUrl,
+        binaryName,
+        platforms: Array.from(new Set(platforms)),
+    };
+}
+
 export default function GeneratePage() {
     const router = useRouter();
     const {
@@ -133,6 +148,7 @@ export default function GeneratePage() {
         setGoReleaserData,
         setAurData,
         setNixData,
+        setDockerData,
         prefillRepoUrl,
         setPrefillRepoUrl,
         setPrefillIssue,
@@ -167,6 +183,7 @@ export default function GeneratePage() {
                 setGoReleaserData(buildGoData(normalizedRepoUrl, prefill));
                 setAurData(buildAurData(normalizedRepoUrl, prefill));
                 setNixData(buildNixData(normalizedRepoUrl, prefill));
+                setDockerData(buildDockerData(normalizedRepoUrl, prefill));
                 setPrefillRepoUrl(normalizedRepoUrl);
                 setPrefillIssue(null);
             }
@@ -191,6 +208,10 @@ export default function GeneratePage() {
             });
             setNixData({
                 ...INITIAL_NIX_FORM_DATA,
+                repoUrl: normalizedRepoUrl,
+            });
+            setDockerData({
+                ...INITIAL_DOCKER_FORM_DATA,
                 repoUrl: normalizedRepoUrl,
             });
             setPrefillRepoUrl(null);
