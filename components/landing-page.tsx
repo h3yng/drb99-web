@@ -149,11 +149,6 @@ export function LandingPage() {
         `
       }} />
 
-      {/* Top Header */}
-      <header className="z-10 flex w-full max-w-6xl items-center justify-end">
-        <ThemeToggle />
-      </header>
-
       {/* Main Hero & Content (Centered) */}
       <main className="z-10 my-auto flex w-full max-w-4xl flex-col items-center text-center">
         {/* Badge */}
@@ -172,7 +167,7 @@ export function LandingPage() {
         <div className="relative flex items-center justify-center w-full">
           <div className="pointer-events-none absolute -z-10 select-none opacity-20 dark:opacity-30 -translate-y-10 sm:-translate-y-12 md:-translate-y-16">
             <img 
-              src="/logo/logo.png" 
+              src="/logo/drb99-logo.png" 
               alt="drb99 Watermark" 
               className="h-32 sm:h-40 md:h-48 w-auto object-contain"
             />
@@ -232,6 +227,7 @@ export function LandingPage() {
         <p className="text-xs text-muted-foreground font-mono">
           © {new Date().getFullYear()} drb99. Open Source under AGPL-3.0.
         </p>
+        <ThemeToggle />
       </footer>
     </div>
   );
