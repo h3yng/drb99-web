@@ -29,6 +29,12 @@ const DISTRIBUTORS: DistributorOption[] = [
     description: "Build PKGBUILD and aur.yaml",
     iconPath: "/icons/aur.svg",
   },
+  {
+    id: "nix",
+    label: "Nix Flake",
+    description: "Generate Nix Flake configuration",
+    iconPath: "/icons/nix.svg",
+  },
 ];
 
 interface DistributorSelectorProps {
