@@ -1,0 +1,7 @@
+services:
+  api:
+    image: h3yng/drb99:0.1.3
+    container_name: drb99-api
+    ports:
+      - "8088:8088"
+    restart: unless-stopped
