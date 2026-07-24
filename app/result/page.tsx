@@ -511,7 +511,29 @@ function ResultPageContent() {
 
         <section className="flex min-h-0 flex-1">
           {!hasResult ? (
-            <div className="w-full overflow-auto p-5">{renderForm()}</div>
+            <div className="w-full overflow-auto p-5">
+              <div
+                className="border p-4"
+                style={{
+                  borderColor: "var(--border)",
+                  background: "var(--surface)",
+                  boxShadow: "3px 3px 0px 0px var(--badge-border)",
+                }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: "var(--muted-foreground)" }}>
+                  Workspace
+                </p>
+                <h2 className="mt-1 text-lg font-semibold" style={{ color: "var(--foreground)" }}>
+                  This is where you shape the package before generating files.
+                </h2>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                  The left panel changes based on the selected distributor. Update the fields, switch targets from the sidebar if needed,
+                  then use Generate to create files in the editor.
+                </p>
+              </div>
+
+              <div className="mt-5">{renderForm()}</div>
+            </div>
           ) : (
             <>
               <div className="w-64 shrink-0" style={{ borderRight: "1px solid var(--border)" }}>

@@ -87,6 +87,8 @@
 
 html {
   color-scheme: dark;
+  background: var(--background);
+  scroll-behavior: smooth;
 }
 
 html.light {
@@ -94,9 +96,16 @@ html.light {
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
 }
 
 /* ── Smooth theme transition on all elements ── */

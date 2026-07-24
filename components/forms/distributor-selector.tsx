@@ -58,14 +58,12 @@ export function DistributorSelector({ selected, onChange }: DistributorSelectorP
           <button
             key={distributor.id}
             onClick={() => onChange(distributor.id)}
-            className="group flex min-h-32 flex-col justify-between border px-4 py-4 text-left transition-all duration-150 cursor-pointer active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+            className="group flex min-h-36 cursor-pointer flex-col justify-between border px-4 py-4 text-left transition-all duration-150 hover:-translate-y-0.5 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
             style={{
               borderColor: isSelected ? "var(--ring)" : "var(--border)",
               background: isSelected ? "var(--surface)" : "var(--card)",
               color: "var(--foreground)",
-              boxShadow: isSelected
-                ? "3px 3px 0px 0px var(--ring)"
-                : "none",
+              boxShadow: isSelected ? "3px 3px 0px 0px var(--ring)" : "none",
             }}
           >
             <div className="flex items-start justify-between gap-3">
@@ -73,7 +71,7 @@ export function DistributorSelector({ selected, onChange }: DistributorSelectorP
                 src={distributor.iconPath}
                 alt={distributor.label}
                 className={cn(
-                  "h-7 w-7 object-contain",
+                  "h-7 w-7 object-contain transition-transform duration-150 group-hover:scale-105",
                   isSelected ? "opacity-95" : "opacity-70"
                 )}
               />

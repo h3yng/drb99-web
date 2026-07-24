@@ -12,12 +12,12 @@ interface DistributorSidebarProps {
 
 export function DistributorSidebar({ distributors, active, onSelect }: DistributorSidebarProps) {
   return (
-    <div className="w-full lg:w-56 border-b lg:border-b-0 lg:border-r border-zinc-800">
+    <div className="w-full border-b border-[var(--border)] bg-[var(--sidebar-bg)] lg:w-56 lg:border-b-0 lg:border-r">
       <div className="flex flex-col">
-        <div className="p-4 border-b border-zinc-800">
-          <h3 className="text-sm font-semibold text-white">Distributors</h3>
+        <div className="border-b border-[var(--border)] p-4">
+          <h3 className="text-sm font-semibold text-[var(--foreground)]">Distributors</h3>
         </div>
-        <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible p-4">
+        <nav className="flex gap-2 overflow-x-auto p-4 lg:flex-col lg:overflow-x-visible">
           {distributors.map((distributor) => {
             const isActive = active === distributor;
             return (
@@ -25,10 +25,10 @@ export function DistributorSidebar({ distributors, active, onSelect }: Distribut
                 key={distributor}
                 onClick={() => onSelect(distributor)}
                 className={cn(
-                  "shrink:0 lg:shirnk px-4 py-3 rounded-lg text-sm font-medium transition-all whitespace-nowrap",
+                  "shrink-0 whitespace-nowrap rounded-none border px-4 py-3 text-sm font-medium transition-all",
                   isActive
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                    ? "border-[var(--ring)] bg-[var(--sidebar-active)] text-[var(--foreground)] shadow-[3px_3px_0px_0px_var(--ring)]"
+                    : "border-[var(--border)] bg-[var(--surface)] text-[var(--muted-foreground)] hover:bg-[var(--surface-hover)] hover:text-[var(--foreground)]"
                 )}
               >
                 {getDistributorLabel(distributor)}
