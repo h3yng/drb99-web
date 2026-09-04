@@ -114,12 +114,12 @@ html.theme-transitioning *,
 html.theme-transitioning *::before,
 html.theme-transitioning *::after {
   transition: background-color 0.4s ease,
-              color 0.4s ease,
-              border-color 0.4s ease,
-              box-shadow 0.4s ease,
-              fill 0.4s ease,
-              stroke 0.4s ease,
-              opacity 0.4s ease !important;
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    fill 0.4s ease,
+    stroke 0.4s ease,
+    opacity 0.4s ease !important;
 }
 
 /* ── Theme Toggle Button ── */
@@ -150,7 +150,7 @@ html.theme-transitioning *::after {
   height: 18px;
   position: absolute;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.25s ease;
+    opacity 0.25s ease;
 }
 
 /* Dark mode: show moon, hide sun */
@@ -204,6 +204,16 @@ html.theme-transitioning *::after {
 }
 
 .light .platform-icon-mac {
+  filter: none;
+}
+
+/* ── cURL logo theme adaptation for light and dark modes ── */
+.dark img[src*="curl"] {
+  filter: brightness(2.4) contrast(1.2);
+}
+
+.light img[src*="curl"],
+:root:not(.dark) img[src*="curl"] {
   filter: none;
 }
 

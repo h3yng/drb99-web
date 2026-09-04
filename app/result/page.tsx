@@ -12,6 +12,7 @@ import { GoReleaseForm } from "@/components/forms/go-release-form";
 import { NpmWrapperForm } from "@/components/forms/npm-wrapper-form";
 import { NixForm } from "@/components/forms/nix-form";
 import { DockerForm } from "@/components/forms/docker-form";
+import { CurlForm } from "@/components/forms/curl-form";
 import { generatePackage } from "@/lib/api";
 import { useAppContext, type DistributorType } from "@/lib/app-context";
 import { getDistributorLabel } from "@/components/forms/distributor-selector";
@@ -49,6 +50,9 @@ function getLanguage(filename: string) {
       return "yaml";
     case "nix":
       return "nix";
+    case "sh":
+    case "bash":
+      return "shell";
     default:
       return "plaintext";
   }
@@ -60,6 +64,8 @@ function getDistributorIcon(type: DistributorType): string {
       return "/icons/npm-wrapper.svg";
     case "goreleaser":
       return "/icons/go-releaser.svg";
+    case "curl":
+      return "/icons/curl.svg";
     case "aur":
       return "/icons/aur.svg";
     case "nix":
@@ -81,7 +87,7 @@ function createDefaultViewState(): DistributorViewState {
 }
 
 function isDistributorType(value: string | null): value is DistributorType {
-  return value === "npm_wrapper" || value === "goreleaser" || value === "github_actions" || value === "aur" || value === "nix" || value === "docker";
+  return value === "npm_wrapper" || value === "goreleaser" || value === "github_actions" || value === "aur" || value === "nix" || value === "docker" || value === "curl";
 }
 
 function getCurrentFileContent(viewState: DistributorViewState, filename: string) {
@@ -111,6 +117,8 @@ function ResultPageContent() {
     setNixData,
     dockerData,
     setDockerData,
+    curlData,
+    setCurlData,
     prefillIssue,
   } = useAppContext();
 
@@ -197,6 +205,7 @@ function ResultPageContent() {
         aur: activeDistributor === "aur",
         nix_flake: activeDistributor === "nix",
         docker_container: activeDistributor === "docker",
+        curl: activeDistributor === "curl",
       };
 
       const payload: Record<string, unknown> = {
@@ -262,6 +271,26 @@ function ResultPageContent() {
           binary_name: dockerData.binaryName,
           runtime_image: dockerData.runtimeImage,
           platforms: mapPlatformsList(dockerData.platforms),
+        });
+      }
+
+      if (activeDistributor === "curl") {
+        const assetUrls: Record<string, string[]> = {};
+        for (const platform of curlData.platforms) {
+          const urls = (curlData.assetUrls[platform] || []).filter(u => u.trim() !== "");
+          if (urls.length > 0) {
+            assetUrls[mapPlatform(platform)] = urls;
+          }
+        }
+
+        Object.assign(payload, {
+          repo_url: repoUrl,
+          binary_name: curlData.binaryName,
+          version: curlData.version,
+          platforms: mapPlatformsList(curlData.platforms),
+          mode: "manual",
+          features: { curl: true },
+          asset_urls: assetUrls,
         });
       }
 
@@ -352,6 +381,10 @@ function ResultPageContent() {
       return <GoReleaseForm data={goReleaserData} onChange={setGoReleaserData} />;
     }
 
+    if (activeDistributor === "curl") {
+      return <CurlForm data={curlData} onChange={setCurlData} />;
+    }
+
     if (activeDistributor === "aur") {
       return <AurForm data={aurData} onChange={setAurData} />;
     }
@@ -420,7 +453,7 @@ function ResultPageContent() {
                     <img
                       src={getDistributorIcon(distributor)}
                       alt={getDistributorLabel(distributor)}
-                      className="h-5 w-5 object-contain opacity-80"
+                      className="h-6 w-auto max-w-[36px] object-contain opacity-100"
                     />
                   )}
                   <span>{getDistributorLabel(distributor)}</span>

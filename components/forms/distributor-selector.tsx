@@ -24,6 +24,12 @@ const DISTRIBUTORS: DistributorOption[] = [
     iconPath: "/icons/go-releaser.svg",
   },
   {
+    id: "curl",
+    label: "cURL",
+    description: "Generate cURL installer script",
+    iconPath: "/icons/curl.svg",
+  },
+  {
     id: "aur",
     label: "AUR",
     description: "Build PKGBUILD and aur.yaml",
@@ -71,8 +77,8 @@ export function DistributorSelector({ selected, onChange }: DistributorSelectorP
                 src={distributor.iconPath}
                 alt={distributor.label}
                 className={cn(
-                  "h-7 w-7 object-contain transition-transform duration-150 group-hover:scale-105",
-                  isSelected ? "opacity-95" : "opacity-70"
+                  "h-8 w-auto max-w-[48px] object-contain transition-transform duration-150 group-hover:scale-105",
+                  isSelected ? "opacity-100" : "opacity-90"
                 )}
               />
               <span
