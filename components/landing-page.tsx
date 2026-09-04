@@ -71,6 +71,7 @@ const FLOATING_ICONS: FloatingIcon[] = [
   // Clustered closer to the center to float behind/around the hero content (Single instance of each)
   { src: "/icons/npm-wrapper.svg", alt: "NPM Wrapper", size: 85, initialLeft: "20%", initialTop: "24%", duration: "24s", delay: "0s", rotateDirection: 1 },
   { src: "/icons/go-releaser.svg", alt: "GoReleaser", size: 95, initialLeft: "70%", initialTop: "20%", duration: "28s", delay: "-3s", rotateDirection: -1 },
+  { src: "/icons/curl.svg", alt: "cURL", size: 80, initialLeft: "82%", initialTop: "38%", duration: "27s", delay: "-4.5s", rotateDirection: 1 },
   { src: "/icons/aur.svg", alt: "AUR", size: 75, initialLeft: "24%", initialTop: "56%", duration: "32s", delay: "-6s", rotateDirection: 1 },
   { src: "/icons/nix.svg", alt: "Nix Flake", size: 90, initialLeft: "68%", initialTop: "52%", duration: "26s", delay: "-9s", rotateDirection: -1 },
   { src: "/icons/docker.svg", alt: "Docker", size: 80, initialLeft: "46%", initialTop: "70%", duration: "30s", delay: "-12s", rotateDirection: 1 },
@@ -86,6 +87,11 @@ const TARGETS = [
     label: "GoReleaser",
     description: "Generate release config that stays aligned with your build matrix.",
     icon: "/icons/go-releaser.svg",
+  },
+  {
+    label: "cURL",
+    description: "Generate a standalone cURL installer script for instant shell installs.",
+    icon: "/icons/curl.svg",
   },
   {
     label: "AUR",

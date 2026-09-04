@@ -6,6 +6,7 @@ import type { GoReleaseFormData } from "@/components/forms/go-release-form";
 import type { AurFormData } from "@/components/forms/aur-form";
 import type { NixFormData } from "@/components/forms/nix-form";
 import type { DockerFormData } from "@/components/forms/docker-form";
+import type { CurlFormData } from "@/components/forms/curl-form";
 import {
   INITIAL_NPM_WRAPPER_DATA,
 } from "@/components/forms/npm-wrapper-form";
@@ -21,8 +22,11 @@ import {
 import {
   INITIAL_DOCKER_FORM_DATA,
 } from "@/components/forms/docker-form";
+import {
+  INITIAL_CURL_FORM_DATA,
+} from "@/components/forms/curl-form";
 
-export type DistributorType = "npm_wrapper" | "goreleaser" | "github_actions" | "aur" | "nix" | "docker";
+export type DistributorType = "npm_wrapper" | "goreleaser" | "github_actions" | "aur" | "nix" | "docker" | "curl";
 
 export interface PrefillResponse {
   repo_url?: string;
@@ -60,6 +64,9 @@ export interface AppContextType {
   dockerData: DockerFormData;
   setDockerData: (data: DockerFormData) => void;
 
+  curlData: CurlFormData;
+  setCurlData: (data: CurlFormData) => void;
+
   prefillRepoUrl: string | null;
   setPrefillRepoUrl: (value: string | null) => void;
 
@@ -80,6 +87,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [aurData, setAurData] = useState<AurFormData>(INITIAL_AUR_FORM_DATA);
   const [nixData, setNixData] = useState<NixFormData>(INITIAL_NIX_FORM_DATA);
   const [dockerData, setDockerData] = useState<DockerFormData>(INITIAL_DOCKER_FORM_DATA);
+  const [curlData, setCurlData] = useState<CurlFormData>(INITIAL_CURL_FORM_DATA);
   const [prefillRepoUrl, setPrefillRepoUrl] = useState<string | null>(null);
   const [prefillIssue, setPrefillIssue] = useState<string | null>(null);
 
@@ -111,6 +119,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setAurData(INITIAL_AUR_FORM_DATA);
     setNixData(INITIAL_NIX_FORM_DATA);
     setDockerData(INITIAL_DOCKER_FORM_DATA);
+    setCurlData(INITIAL_CURL_FORM_DATA);
     setPrefillRepoUrl(null);
     setPrefillIssue(null);
   };
@@ -134,6 +143,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setNixData,
         dockerData,
         setDockerData,
+        curlData,
+        setCurlData,
         prefillRepoUrl,
         setPrefillRepoUrl,
         prefillIssue,
